@@ -5,24 +5,21 @@ import { HomeComponent } from './home-component.component';
 import { TempratureComponent } from './temprature/temprature.component';
 import { WeatherComponent } from './weather/weather.component';
 
- export const routes: Routes = [
-      {
-        path: '',
-        component: HomeComponent,
-      },
-      {
-        path: 'weather',
-        component: WeatherComponent,
-      },
-      {
-        path: 'currancy',
-        component: CurrancyComponent,
-      },
-      {
-        path: 'temprature',
-        component: TempratureComponent,
-      }
-
+export const routes: Routes = [
+  {
+    path: '',
+    component: HomeComponent,
+  },
+  {
+    path: 'weather',
+    component: WeatherComponent,
+  },
+  {
+    path: 'currancy',
+    component: CurrancyComponent,
+  },
+  {
+    path: 'temperature',
+    component: TempratureComponent,
+  },
 ];
-
-

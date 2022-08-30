@@ -1,1 +1,115 @@
-<p>temprature works!</p>
+<div class="page-container">
+  <div class="empty-div-150 d-flex-col">
+    <h1 class="d-inline">Temperatures Calculation</h1>
+    <div class="float-right mt-20">
+      <button
+        type="button"
+        class="ml-5"
+        (click)="route(1)"
+        mat-raised-button
+        color="primary"
+      >
+        Main Screen
+      </button>
+      <button
+        type="button"
+        class="ml-5"
+        (click)="route(2)"
+        mat-raised-button
+        color="primary"
+      >
+        Weather
+      </button>
+      <button
+        type="button"
+        class="ml-5"
+        (click)="route(3)"
+        mat-raised-button
+        color="primary"
+      >
+        Currancy
+      </button>
+    </div>
+  </div>
+
+  <div class="page-header d-flex-center">
+    <mat-card class="w-35">
+      <mat-card-actions class="d-flex">
+        <form [formGroup]="temperatureForm">
+          <mat-form-field appearance="outline" class="mr-20">
+            <mat-label>Fahrenheit<span class="error">*</span></mat-label>
+            <input
+              #f
+              (keyup)="Calcuate(f.value, 1)"
+              type="text"
+              formControlName="fahrenheit"
+              matInput
+            />
+            <span
+              class="pr-5"
+              *ngIf="
+                temperatureForm.get('fahrenheit').hasError('required') &&
+                temperatureForm.get('fahrenheit').touched
+              "
+              #tooltip="matTooltip"
+              matTooltip="Please Provide the Fahrenheit"
+              matTooltipPosition="right"
+              matTooltipDisable="!temperatureForm.controls['fahrenheit'].invalid"
+            >
+              <mat-icon class="error">error</mat-icon>
+            </span>
+            <span
+              class="pr-5"
+              *ngIf="
+                temperatureForm.get('fahrenheit').hasError('pattern') &&
+                temperatureForm.get('fahrenheit').touched
+              "
+              #tooltip="matTooltip"
+              matTooltip="Please Provide the valid Fahrenheit"
+              matTooltipPosition="right"
+              matTooltipDisable="!temperatureForm.controls['fahrenheit'].invalid"
+            >
+              <mat-icon class="error">error</mat-icon>
+            </span>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Celsius<span class="error">*</span></mat-label>
+            <input
+              #c
+              (keyup)="Calcuate(c.value, 2)"
+              type="text"
+              formControlName="Celsius"
+              matInput
+            />
+            <span
+              class="pr-5"
+              *ngIf="
+                temperatureForm.get('Celsius').hasError('required') &&
+                temperatureForm.get('Celsius').touched
+              "
+              #tooltip="matTooltip"
+              matTooltip="Please Provide the Celsius"
+              matTooltipPosition="right"
+              matTooltipDisable="!temperatureForm.controls['Celsius'].invalid"
+            >
+              <mat-icon class="error">error</mat-icon>
+            </span>
+            <span
+              class="pr-5"
+              *ngIf="
+                temperatureForm.get('Celsius').hasError('pattern') &&
+                temperatureForm.get('Celsius').touched
+              "
+              #tooltip="matTooltip"
+              matTooltip="Please Provide the valid Celsius"
+              matTooltipPosition="right"
+              matTooltipDisable="!temperatureForm.controls['Celsius'].invalid"
+            >
+              <mat-icon class="error">error</mat-icon>
+            </span>
+          </mat-form-field>
+        </form>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
