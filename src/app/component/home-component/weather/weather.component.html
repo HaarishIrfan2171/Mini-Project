@@ -1,63 +1,119 @@
 <div class="page-container">
-    <div class="empty-div-150 d-flex-col">
-        <h1 class="d-inline">Weather Forcast</h1> 
-        <div class="float-right mt-20 ">
-            <button type="button" class="ml-5" (click)="route(1)" mat-raised-button color="primary">Main Screen</button>
-            <button type="button" class="ml-5" (click)="route(2)" mat-raised-button color="primary">Currancy</button>
-            <button type="button" class="ml-5" (click)="route(3)" mat-raised-button color="primary">Temprature</button>
-        </div>
-
+  <div class="empty-div-150 d-flex-col">
+    <h1 class="d-inline">Weather Forcast</h1>
+    <div class="float-right mt-20">
+      <button
+        type="button"
+        class="ml-5"
+        (click)="route(1)"
+        mat-raised-button
+        color="primary"
+      >
+        Main Screen
+      </button>
+      <button
+        type="button"
+        class="ml-5"
+        (click)="route(2)"
+        mat-raised-button
+        color="primary"
+      >
+        Currancy
+      </button>
+      <button
+        type="button"
+        class="ml-5"
+        (click)="route(3)"
+        mat-raised-button
+        color="primary"
+      >
+        Temprature
+      </button>
     </div>
-    <div class="page-header d-flex-center">
-        <mat-card class="w-90">
-            <mat-card-actions class="d-flex">
-                <mat-form-field appearance="outline">
-                    <mat-label>City</mat-label>
-                    <mat-select [(ngModel)]="Mycity" >
-                      <mat-option (click)="view(city)" *ngFor="let city of cities" [value]="city?.cityId">{{city?.cityName}}</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-            </mat-card-actions>
-            <table style="width: 100%;" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  </div>
+  <div class="page-header d-flex-center">
+    <mat-card class="w-90">
+      <mat-card-actions class="d-flex">
+        <mat-form-field appearance="outline">
+          <mat-label>City</mat-label>
+          <mat-select [(ngModel)]="Mycity">
+            <mat-option
+              (click)="view(city)"
+              *ngFor="let city of cities"
+              [value]="city?.cityId"
+              >{{ city?.cityName }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </mat-card-actions>
+      <table
+        style="width: 100%"
+        mat-table
+        [dataSource]="dataSource"
+        class="mat-elevation-z8"
+      >
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>Date</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.date | date: "dd-MM-yyyy" }}
+          </td>
+        </ng-container>
 
-              <ng-container matColumnDef="date">
-                <th mat-header-cell *matHeaderCellDef> Date </th>
-                <td mat-cell *matCellDef="let element"> {{element.date | date: 'dd-MM-yyyy'}} </td>
-              </ng-container>
+        <ng-container matColumnDef="sunrice">
+          <th mat-header-cell *matHeaderCellDef>Sunrice</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.astro.sunrise }}
+          </td>
+        </ng-container>
 
+        <ng-container matColumnDef="sunset">
+          <th mat-header-cell *matHeaderCellDef>Sunset</th>
+          <td mat-cell *matCellDef="let element">{{ element.astro.sunset }}</td>
+        </ng-container>
 
-              <ng-container matColumnDef="sunrice">
-                <th mat-header-cell *matHeaderCellDef> Sunrice </th>
-                <td mat-cell *matCellDef="let element"> {{element.astro.sunrise}} </td>
-              </ng-container>
+        <ng-container matColumnDef="moonrice">
+          <th mat-header-cell *matHeaderCellDef>Moonrice</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.astro.moonrise }}
+          </td>
+        </ng-container>
 
-              <ng-container matColumnDef="sunset">
-                <th mat-header-cell *matHeaderCellDef> Sunset </th>
-                <td mat-cell *matCellDef="let element"> {{element.astro.sunset}} </td>
-              </ng-container>
+        <ng-container matColumnDef="moonset">
+          <th mat-header-cell *matHeaderCellDef>Moonset</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.astro.moonset }}
+          </td>
+        </ng-container>
 
-              <ng-container matColumnDef="moonrice">
-                <th mat-header-cell *matHeaderCellDef> Moonrice </th>
-                <td mat-cell *matCellDef="let element"> {{element.astro.moonrise}} </td>
-              </ng-container>
-              
-              <ng-container matColumnDef="moonset">
-                  <th mat-header-cell *matHeaderCellDef> Moonset </th>
-                  <td mat-cell *matCellDef="let element"> {{element.astro.moonset}} </td>
-                </ng-container>
+        <ng-container matColumnDef="condition">
+          <th mat-header-cell *matHeaderCellDef>Condition</th>
+          <td mat-cell *matCellDef="let element">
+            <span class="d-flex-align-center"
+              ><span><img src="{{ element.day.condition.icon }}" /></span>
+              {{ element.day.condition.text }}
+            </span>
+          </td>
+        </ng-container>
 
-                <ng-container matColumnDef="condition">
-                  <th mat-header-cell *matHeaderCellDef> Condition </th>
-                  <td mat-cell *matCellDef="let element"> <span class="d-flex-align-center"><span><img src="{{element.day.condition.icon}}" /></span> {{element.day.condition.text}} </span></td>
-                </ng-container>
-            
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-            <ng-container *ngIf="dataSource.data.length === 0 || dataSource.filteredData.length === 0 ">
-              <p class="text-center color-b bg-white mb-0"> <b>No Data Found...</b> </p>
-            </ng-container>
-        </mat-card>
-    </div>
-
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+      <ng-container
+        *ngIf="
+          dataSource.data.length === 0 || dataSource.filteredData.length === 0
+        "
+      >
+        <p class="text-center color-b bg-white mb-0"><b>No Data Found...</b></p>
+      </ng-container>
+    </mat-card>
+  </div>
 </div>
+
+<ngx-spinner
+  bdColor="rgba(0,0,0,0.8)"
+  size="medium"
+  color="#fff"
+  type="square-loader"
+  [fullScreen]="true"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>
